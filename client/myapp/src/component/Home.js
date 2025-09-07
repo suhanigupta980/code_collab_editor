@@ -33,14 +33,14 @@ function Home() {
            <div className='card shadow-sm p-2 mb-5 bg-secondary rounded'>
            <div className='card-body text-center bg-dark'>
                     {/* <img className='image-fluid mx-auto d-block mb-4' src="/images/logo(3).png" alt="logo" */}
-                    <img className='image-fluid mx-auto d-block mb-4' src="/ logo(3).png" alt="logo"
-                    style={{ 
-                              // width: '100%', 
-                              // maxWidth: '200px', 
-                              // height: 'auto', 
-                              backgroundColor: '#0b0b0e80', // replace with your screen background color
-                              width: '100%', maxWidth: '200px', height: 'auto'
-                            }}/>
+                    {/* <img className='image-fluid mx-auto d-block mb-4' src="/ logo(3).png" alt="logo" */}
+                    <h1 
+  className="mx-auto d-block mb-4 app-heading"
+  style={{ color: "#00ffcc", textShadow: "0 0 10px #00ffcc" }}
+>
+  𝓒𝓸𝓭𝓮 𝓝𝓮𝔁𝓾𝓼
+</h1>
+
 {/*  // style = {{ width: '100%', maxWidth: '200px', height: 'auto'}}  / */}
 
                     <h4 className='text-light'>Enter the Room Id</h4>
