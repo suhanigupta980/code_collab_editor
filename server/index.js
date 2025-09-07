@@ -23,6 +23,9 @@ const io = new Server(server, {
 });
 
 const userSocketMap = {};
+// Keep track of the latest code per room
+const codeStateMap = {}; // NEW
+
 const getAllConnectedClients = (roomId) => {
   return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map(
     (socketId) => {
@@ -39,6 +42,9 @@ io.on("connection", (socket) => {
     userSocketMap[socket.id] = username;
     socket.join(roomId);
     const clients = getAllConnectedClients(roomId);
+    if (codeStateMap[roomId]) {
+      socket.emit(ACTIONS.CODE_CHANGE, { code: codeStateMap[roomId] });
+    }
     clients.forEach(({ socketId }) => {
       io.to(socketId).emit(ACTIONS.JOINED, {
         clients,
@@ -49,6 +55,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on(ACTIONS.CODE_CHANGE, ({ roomId, code }) => {
+        codeStateMap[roomId] = code;
+
     socket.in(roomId).emit(ACTIONS.CODE_CHANGE, { code });
   });
   
