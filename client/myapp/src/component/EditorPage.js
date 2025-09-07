@@ -392,26 +392,14 @@ function EditorPage() {
         navigate("/");
       };
 
-      socketRef.current.emit(ACTIONS.JOIN, {
-        roomId,
-        username: Location.state?.username,
-      });
+      socketRef.current.emit(ACTIONS.JOIN, { roomId, username: Location.state?.username, });
 
-      socketRef.current.on(
-        ACTIONS.JOINED,
-        ({ clients, username, socketId }) => {
-          if (username !== Location.state?.username) {
-            toast.success(`${username} joined the room.`);
-          }
-          setClients(clients);
-          if (code) {
-             socketRef.current.emit(ACTIONS.SYNC_CODE, {
-                code: code,
-                socketId,
-             });
-          }
-        }
-      );
+      socketRef.current.on(ACTIONS.JOINED, ({ clients, username, socketId }) => {
+ if (username !== Location.state?.username) {
+    toast.success(`${username} joined the room.`);
+  }
+  setClients(clients);
+});
 
       socketRef.current.on(ACTIONS.DISCONNECTED, ({ socketId, username }) => {
         toast.success(`${username} left the room`);
@@ -421,9 +409,19 @@ function EditorPage() {
       });
       
       socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
-          if (code !== null) {
+//         if (codeStateMap[roomId]) {
+//     socket.emit(ACTIONS.CODE_CHANGE, { code: codeStateMap[roomId] });
+// }
+
+        // codeStateMap[roomId] = code;
+
+  // Broadcast to other users
+
+
+  if (code !== null) {
               setCode(code);
           }
+        
       });
     };
     init();
@@ -536,6 +534,7 @@ function EditorPage() {
           <Editor
   socketRef={socketRef}
   roomId={roomId}
+    code={code} // ✅ pass code to Editor
   onCodeChange={(newCode) => {
     setCode(newCode); // ✅ only update state
   }}
